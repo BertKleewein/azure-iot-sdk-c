@@ -3,6 +3,9 @@
 	<name>iothub_client_sample_http</name>
 	<comment></comment>
 	<projects>
+		<project>c_utility</project>
+		<project>iothub_client</project>
+		<project>iothub_http_transport</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
@@ -24,4 +27,11 @@
 		<nature>org.eclipse.cdt.core.ccnature</nature>
 		<nature>org.eclipse.cdt.managedbuilder.core.ScannerConfigNature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>iothub_client_sample_http.c</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/iothub_client_sample_http.c</locationURI>
+		</link>
+	</linkedResources>
 </projectDescription>

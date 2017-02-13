@@ -24,4 +24,21 @@
 		<nature>org.eclipse.cdt.core.ccnature</nature>
 		<nature>org.eclipse.cdt.managedbuilder.core.ScannerConfigNature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>iothub_client_ll.c</name>
+			<type>1</type>
+			<locationURI>PARENT-3-PROJECT_LOC/src/iothub_client_ll.c</locationURI>
+		</link>
+		<link>
+			<name>iothub_message.c</name>
+			<type>1</type>
+			<locationURI>PARENT-3-PROJECT_LOC/src/iothub_message.c</locationURI>
+		</link>
+		<link>
+			<name>iothubtransporthttp.c</name>
+			<type>1</type>
+			<locationURI>PARENT-3-PROJECT_LOC/src/iothubtransporthttp.c</locationURI>
+		</link>
+	</linkedResources>
 </projectDescription>
