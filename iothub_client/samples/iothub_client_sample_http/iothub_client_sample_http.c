@@ -32,8 +32,8 @@ static const char* connectionString = "[device connection string]";
 
 static int callbackCounter;
 static bool g_continueRunning;
-static char msgText[256];
-static char propText[256];
+static char msgText[512];
+static char propText[512];
 #define MESSAGE_COUNT       5
 #define DOWORK_LOOP_NUM     3
 
@@ -137,7 +137,7 @@ void iothub_client_sample_http_run(void)
         }
         else
         {
-            unsigned int timeout = 241000;
+            uint32_t timeout = 241000;
             // Because it can poll "after 9 seconds" polls will happen effectively // at ~10 seconds.
             // Note that for scalabilty, the default value of minimumPollingTime
             // is 25 minutes. For more information, see:

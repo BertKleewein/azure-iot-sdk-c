@@ -36,7 +36,11 @@ const char* IOTHUB_CORRELATION_ID = "iothub-correlationid";
 /*the default is 25 minutes*/
 #define DEFAULT_GETMINIMUMPOLLINGTIME ((unsigned int)25*60) 
 
+#if defined(__MSP430__)
+#define MAXIMUM_MESSAGE_SIZE (2*1024-1)
+#else
 #define MAXIMUM_MESSAGE_SIZE (255*1024-1)
+#endif
 #define MAXIMUM_PAYLOAD_OVERHEAD 384
 #define MAXIMUM_PROPERTY_OVERHEAD 16
 
