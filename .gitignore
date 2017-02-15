@@ -155,9 +155,9 @@ ModelManifest.xml
 *.egg-info
 
 # TI Code Composer Studio detritus
-*/org.eclipse.cdt.codan.core.prefs
-*/org.eclipse.cdt.debug.core.prefs
-*/org.eclipse.core.resources.prefs
+**/org.eclipse.cdt.codan.core.prefs
+**/org.eclipse.cdt.debug.core.prefs
+**/org.eclipse.core.resources.prefs
         
 # =========================
 # Windows detritus
