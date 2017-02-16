@@ -3,9 +3,7 @@
 	<name>iothub_client_sample_http</name>
 	<comment></comment>
 	<projects>
-		<project>c_utility</project>
 		<project>iothub_client</project>
-		<project>iothub_http_transport</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
