@@ -136,6 +136,7 @@ SECTIONS
         {
            .TI.persistent : {}              /* For #pragma persistent            */
            .cio           : {}              /* C I/O Buffer                      */
+	    .bss        : {}                   /* Global & static vars              */
            .sysmem        : {}              /* Dynamic memory allocation area    */
         } PALIGN(0x0400), RUN_START(fram_rw_start)
 
@@ -186,7 +187,6 @@ SECTIONS
         .jtagpassword  : {}                 /* JTAG Password                     */
     } > IPESIGNATURE
 
-    .bss        : {} > FRAM                  /* Global & static vars              */
     .data       : {} > RAM                  /* Global & static vars              */
     .TI.noinit  : {} > RAM                  /* For #pragma noinit                */
     .stack      : {} > RAM (HIGH)           /* Software system stack             */
