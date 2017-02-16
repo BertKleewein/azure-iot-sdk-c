@@ -482,6 +482,7 @@ static bool findDeviceById(const void* element, const void* value)
 static IOTHUB_DEVICE_HANDLE IoTHubTransportHttp_Register(TRANSPORT_LL_HANDLE handle, const IOTHUB_DEVICE_CONFIG* device, IOTHUB_CLIENT_LL_HANDLE iotHubClientHandle, PDLIST_ENTRY waitingToSend)
 {
     HTTPTRANSPORT_PERDEVICE_DATA* result;
+#if SAFETY_NET
     if (handle == NULL || device == NULL)
     {
         /*Codes_SRS_TRANSPORTMULTITHTTP_17_142: [ If handle is NULL or device is NULL, then IoTHubTransportHttp_Register shall return NULL. ]*/
@@ -499,6 +500,7 @@ static IOTHUB_DEVICE_HANDLE IoTHubTransportHttp_Register(TRANSPORT_LL_HANDLE han
         result = NULL;
     }
     else
+#endif
     {
         HTTPTRANSPORT_HANDLE_DATA* handleData = (HTTPTRANSPORT_HANDLE_DATA*)handle;
         /*Codes_SRS_TRANSPORTMULTITHTTP_17_137: [ IoTHubTransportHttp_Register shall search the devices list for any device matching name deviceId. If deviceId is found it shall return NULL. ]*/
@@ -766,6 +768,7 @@ static bool create_perDeviceList(HTTPTRANSPORT_HANDLE_DATA* handleData)
 static TRANSPORT_LL_HANDLE IoTHubTransportHttp_Create(const IOTHUBTRANSPORT_CONFIG* config)
 {
     HTTPTRANSPORT_HANDLE_DATA* result;
+#if SAFETY_NET
     if (config == NULL)
     {
         /*Codes_SRS_TRANSPORTMULTITHTTP_17_001: [If parameter config is NULL, then IoTHubTransportHttp_Create shall return NULL.]*/
@@ -797,6 +800,7 @@ static TRANSPORT_LL_HANDLE IoTHubTransportHttp_Create(const IOTHUBTRANSPORT_CONF
         result = NULL;
     }
     else
+#endif
     {
         /*Codes_SRS_TRANSPORTMULTITHTTP_17_130: [ IoTHubTransportHttp_Create shall allocate memory for the handle. ]*/
         result = (HTTPTRANSPORT_HANDLE_DATA*)malloc(sizeof(HTTPTRANSPORT_HANDLE_DATA));
@@ -860,6 +864,7 @@ static void IoTHubTransportHttp_Destroy(TRANSPORT_LL_HANDLE handle)
 static int IoTHubTransportHttp_Subscribe(IOTHUB_DEVICE_HANDLE handle)
 {
     int result;
+#if SAFETY_NET
     if (handle == NULL)
     {
         /*Codes_SRS_TRANSPORTMULTITHTTP_17_103: [ If parameter deviceHandle is NULL then IoTHubTransportHttp_Subscribe shall fail and return a non-zero value. ]*/
@@ -867,6 +872,7 @@ static int IoTHubTransportHttp_Subscribe(IOTHUB_DEVICE_HANDLE handle)
         result = __FAILURE__;
     }
     else
+#endif
     {
         /*Codes_SRS_TRANSPORTMULTITHTTP_17_104: [ IoTHubTransportHttp_Subscribe shall locate deviceHandle in the transport device list by calling list_find_if. ]*/
         IOTHUB_DEVICE_HANDLE* listItem = get_perDeviceDataItem(handle);
@@ -2154,6 +2160,7 @@ static IOTHUB_CLIENT_RESULT IoTHubTransportHttp_SetOption(TRANSPORT_LL_HANDLE ha
     /*Codes_SRS_TRANSPORTMULTITHTTP_17_114: [If handle parameter is NULL then IoTHubTransportHttp_SetOption shall return IOTHUB_CLIENT_INVALID_ARG.] */
     /*Codes_SRS_TRANSPORTMULTITHTTP_17_115: [If option parameter is NULL then IoTHubTransportHttp_SetOption shall return IOTHUB_CLIENT_INVALID_ARG.] */
     /*Codes_SRS_TRANSPORTMULTITHTTP_17_116: [If value parameter is NULL then IoTHubTransportHttp_SetOption shall return IOTHUB_CLIENT_INVALID_ARG.] */
+#if SAFETY_NET
     if (
         (handle == NULL) ||
         (option == NULL) ||
@@ -2164,6 +2171,7 @@ static IOTHUB_CLIENT_RESULT IoTHubTransportHttp_SetOption(TRANSPORT_LL_HANDLE ha
         LogError("invalid parameter (NULL) passed to IoTHubTransportHttp_SetOption");
     }
     else
+#endif
     {
         HTTPTRANSPORT_HANDLE_DATA* handleData = (HTTPTRANSPORT_HANDLE_DATA*)handle;
         /*Codes_SRS_TRANSPORTMULTITHTTP_17_120: ["Batching"] */
@@ -2210,12 +2218,14 @@ static STRING_HANDLE IoTHubTransportHttp_GetHostname(TRANSPORT_LL_HANDLE handle)
 {
     STRING_HANDLE result;
     /*Codes_SRS_TRANSPORTMULTITHTTP_02_001: [ If handle is NULL then IoTHubTransportHttp_GetHostname shall fail and return NULL. ]*/
+#if SAFETY_NET
     if (handle == NULL)
     {
         LogError("invalid parameter handle=%p", handle);
         result = NULL;
     }
     else
+#endif
     {
         /*Codes_SRS_TRANSPORTMULTITHTTP_02_002: [ Otherwise IoTHubTransportHttp_GetHostname shall return a non-NULL STRING_HANDLE containing the hostname. ]*/
         HTTPTRANSPORT_HANDLE_DATA* handleData = (HTTPTRANSPORT_HANDLE_DATA*)handle;

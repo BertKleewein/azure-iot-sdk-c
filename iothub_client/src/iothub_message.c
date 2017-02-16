@@ -310,6 +310,7 @@ IOTHUB_MESSAGE_HANDLE IoTHubMessage_Clone(IOTHUB_MESSAGE_HANDLE iotHubMessageHan
 IOTHUB_MESSAGE_RESULT IoTHubMessage_GetByteArray(IOTHUB_MESSAGE_HANDLE iotHubMessageHandle, const unsigned char** buffer, size_t* size)
 {
     IOTHUB_MESSAGE_RESULT result;
+#if SAFETY_NET
     if (
         (iotHubMessageHandle == NULL) ||
         (buffer == NULL) ||
@@ -321,6 +322,7 @@ IOTHUB_MESSAGE_RESULT IoTHubMessage_GetByteArray(IOTHUB_MESSAGE_HANDLE iotHubMes
         result = IOTHUB_MESSAGE_INVALID_ARG;
     }
     else
+#endif
     {
         IOTHUB_MESSAGE_HANDLE_DATA* handleData = iotHubMessageHandle;
         if (handleData->contentType != IOTHUBMESSAGE_BYTEARRAY)

@@ -130,6 +130,7 @@ IOTHUB_CLIENT_LL_HANDLE IoTHubClient_LL_CreateFromConnectionString(const char* c
     LogInfo("IoT Hub SDK for C, version %s", IoTHubClient_GetVersionString());
 
     /* Codes_SRS_IOTHUBCLIENT_LL_12_003: [IoTHubClient_LL_CreateFromConnectionString shall verify the input parameter and if it is NULL then return NULL] */
+#if SAFETY_NET
     if (connectionString == NULL)
     {
         LogError("Input parameter is NULL: connectionString");
@@ -141,6 +142,7 @@ IOTHUB_CLIENT_LL_HANDLE IoTHubClient_LL_CreateFromConnectionString(const char* c
         result = NULL;
     }
     else
+#endif
     {
         /* Codes_SRS_IOTHUBCLIENT_LL_12_004: [IoTHubClient_LL_CreateFromConnectionString shall allocate IOTHUB_CLIENT_CONFIG structure] */
         IOTHUB_CLIENT_CONFIG* config = (IOTHUB_CLIENT_CONFIG*) malloc(sizeof(IOTHUB_CLIENT_CONFIG));
@@ -417,6 +419,7 @@ IOTHUB_CLIENT_LL_HANDLE IoTHubClient_LL_Create(const IOTHUB_CLIENT_CONFIG* confi
 {
     IOTHUB_CLIENT_LL_HANDLE result;
     /*Codes_SRS_IOTHUBCLIENT_LL_02_001: [IoTHubClient_LL_Create shall return NULL if config parameter is NULL or protocol field is NULL.]*/
+#if SAFETY_NET
     if( 
         (config == NULL) ||
         (config->protocol == NULL)
@@ -426,6 +429,7 @@ IOTHUB_CLIENT_LL_HANDLE IoTHubClient_LL_Create(const IOTHUB_CLIENT_CONFIG* confi
         LogError("invalid configuration (NULL detected)");
     }
     else
+#endif
     {
         IOTHUB_CLIENT_LL_HANDLE_DATA* handleData = (IOTHUB_CLIENT_LL_HANDLE_DATA*)malloc(sizeof(IOTHUB_CLIENT_LL_HANDLE_DATA));
         if (handleData == NULL)
@@ -547,6 +551,7 @@ IOTHUB_CLIENT_LL_HANDLE IoTHubClient_LL_CreateWithTransport(const IOTHUB_CLIENT_
 {
     IOTHUB_CLIENT_LL_HANDLE result;
     /*Codes_SRS_IOTHUBCLIENT_LL_17_001: [IoTHubClient_LL_CreateWithTransport shall return NULL if config parameter is NULL, or protocol field is NULL or transportHandle is NULL.]*/
+#if SAFETY_NET
     if (
         (config == NULL) ||
         (config->protocol == NULL) ||
@@ -559,6 +564,7 @@ IOTHUB_CLIENT_LL_HANDLE IoTHubClient_LL_CreateWithTransport(const IOTHUB_CLIENT_
         LogError("invalid configuration (NULL detected)");
     }
     else
+#endif
     {
         /*Codes_SRS_IOTHUBCLIENT_LL_17_002: [IoTHubClient_LL_CreateWithTransport shall allocate data for the IOTHUB_CLIENT_LL_HANDLE.]*/
         IOTHUB_CLIENT_LL_HANDLE_DATA* handleData = (IOTHUB_CLIENT_LL_HANDLE_DATA*)malloc(sizeof(IOTHUB_CLIENT_LL_HANDLE_DATA));
@@ -778,6 +784,7 @@ IOTHUB_CLIENT_RESULT IoTHubClient_LL_SendEventAsync(IOTHUB_CLIENT_LL_HANDLE iotH
 {
     IOTHUB_CLIENT_RESULT result;
     /*Codes_SRS_IOTHUBCLIENT_LL_02_011: [IoTHubClient_LL_SendEventAsync shall fail and return IOTHUB_CLIENT_INVALID_ARG if parameter iotHubClientHandle or eventMessageHandle is NULL.]*/
+#if SAFETY_NET
     if (
         (iotHubClientHandle == NULL) ||
         (eventMessageHandle == NULL) ||
@@ -789,6 +796,7 @@ IOTHUB_CLIENT_RESULT IoTHubClient_LL_SendEventAsync(IOTHUB_CLIENT_LL_HANDLE iotH
         LOG_ERROR_RESULT;
     }
     else
+#endif
     {
         IOTHUB_MESSAGE_LIST *newEntry = (IOTHUB_MESSAGE_LIST*)malloc(sizeof(IOTHUB_MESSAGE_LIST));
         if (newEntry == NULL)
@@ -835,12 +843,14 @@ IOTHUB_CLIENT_RESULT IoTHubClient_LL_SetMessageCallback(IOTHUB_CLIENT_LL_HANDLE 
 {
     IOTHUB_CLIENT_RESULT result;
     /*Codes_SRS_IOTHUBCLIENT_LL_02_016: [IoTHubClient_LL_SetMessageCallback shall fail and return IOTHUB_CLIENT_INVALID_ARG if parameter iotHubClientHandle is NULL.] */
+#if SAFETY_NET
     if (iotHubClientHandle == NULL)
     {
         result = IOTHUB_CLIENT_INVALID_ARG;
         LOG_ERROR_RESULT;
     }
     else
+#endif
     {
         IOTHUB_CLIENT_LL_HANDLE_DATA* handleData = (IOTHUB_CLIENT_LL_HANDLE_DATA*)iotHubClientHandle;
         if (messageCallback == NULL)
@@ -959,12 +969,14 @@ IOTHUB_CLIENT_RESULT IoTHubClient_LL_GetSendStatus(IOTHUB_CLIENT_LL_HANDLE iotHu
     IOTHUB_CLIENT_RESULT result;
 
     /* Codes_SRS_IOTHUBCLIENT_09_007: [IoTHubClient_GetSendStatus shall return IOTHUB_CLIENT_INVALID_ARG if called with NULL parameter] */
+#if SAFETY_NET
     if (iotHubClientHandle == NULL || iotHubClientStatus == NULL)
     {
         result = IOTHUB_CLIENT_INVALID_ARG;
         LOG_ERROR_RESULT;
     }
     else
+#endif
     {
         IOTHUB_CLIENT_LL_HANDLE_DATA* handleData = (IOTHUB_CLIENT_LL_HANDLE_DATA*)iotHubClientHandle;
 
@@ -979,6 +991,7 @@ IOTHUB_CLIENT_RESULT IoTHubClient_LL_GetSendStatus(IOTHUB_CLIENT_LL_HANDLE iotHu
 void IoTHubClient_LL_SendComplete(IOTHUB_CLIENT_LL_HANDLE handle, PDLIST_ENTRY completed, IOTHUB_CLIENT_CONFIRMATION_RESULT result)
 {
     /*Codes_SRS_IOTHUBCLIENT_LL_02_022: [If parameter completed is NULL, or parameter handle is NULL then IoTHubClient_LL_SendBatch shall return.]*/
+#if SAFETY_NET
     if (
         (handle == NULL) ||
         (completed == NULL)
@@ -988,6 +1001,7 @@ void IoTHubClient_LL_SendComplete(IOTHUB_CLIENT_LL_HANDLE handle, PDLIST_ENTRY c
         LogError("invalid arg");
     }
     else
+#endif
     {
         /*Codes_SRS_IOTHUBCLIENT_LL_02_027: [If parameter result is IOTHUB_CLIENT_CONFIRMATION_ERROR then IoTHubClient_LL_SendComplete shall call all the non-NULL callbacks with the result parameter set to IOTHUB_CLIENT_CONFIRMATION_ERROR and the context set to the context passed originally in the SendEventAsync call.] */
         /*Codes_SRS_IOTHUBCLIENT_LL_02_025: [If parameter result is IOTHUB_CLIENT_CONFIRMATION_OK then IoTHubClient_LL_SendComplete shall call all the non-NULL callbacks with the result parameter set to IOTHUB_CLIENT_CONFIRMATION_OK and the context set to the context passed originally in the SendEventAsync call.]*/
@@ -1009,6 +1023,7 @@ void IoTHubClient_LL_SendComplete(IOTHUB_CLIENT_LL_HANDLE handle, PDLIST_ENTRY c
 int IoTHubClient_LL_DeviceMethodComplete(IOTHUB_CLIENT_LL_HANDLE handle, const char* method_name, const unsigned char* payLoad, size_t size, METHOD_HANDLE response_id)
 {
     int result;
+#if SAFETY_NET
     if (handle == NULL)
     {
         /* Codes_SRS_IOTHUBCLIENT_LL_07_017: [ If handle or response is NULL then IoTHubClient_LL_DeviceMethodComplete shall return 500. ] */
@@ -1016,6 +1031,7 @@ int IoTHubClient_LL_DeviceMethodComplete(IOTHUB_CLIENT_LL_HANDLE handle, const c
         result = __FAILURE__;
     }
     else
+#endif
     {
         /* Codes_SRS_IOTHUBCLIENT_LL_07_018: [ If deviceMethodCallback is not NULL IoTHubClient_LL_DeviceMethodComplete shall execute deviceMethodCallback and return the status. ] */
         IOTHUB_CLIENT_LL_HANDLE_DATA* handleData = (IOTHUB_CLIENT_LL_HANDLE_DATA*)handle;
@@ -1053,12 +1069,14 @@ int IoTHubClient_LL_DeviceMethodComplete(IOTHUB_CLIENT_LL_HANDLE handle, const c
 
 void IoTHubClient_LL_RetrievePropertyComplete(IOTHUB_CLIENT_LL_HANDLE handle, DEVICE_TWIN_UPDATE_STATE update_state, const unsigned char* payLoad, size_t size)
 {
+#if SAFETY_NET
     if (handle == NULL)
     {
         /* Codes_SRS_IOTHUBCLIENT_LL_07_013: [ If handle is NULL then IoTHubClient_LL_RetrievePropertyComplete shall do nothing.] */
         LogError("Invalid argument handle=%p", handle);
     }
     else
+#endif
     {
         IOTHUB_CLIENT_LL_HANDLE_DATA* handleData = (IOTHUB_CLIENT_LL_HANDLE_DATA*)handle;
         /* Codes_SRS_IOTHUBCLIENT_LL_07_014: [ If deviceTwinCallback is NULL then IoTHubClient_LL_RetrievePropertyComplete shall do nothing.] */
@@ -1081,12 +1099,14 @@ void IoTHubClient_LL_RetrievePropertyComplete(IOTHUB_CLIENT_LL_HANDLE handle, DE
 void IoTHubClient_LL_ReportedStateComplete(IOTHUB_CLIENT_LL_HANDLE handle, uint32_t item_id, int status_code)
 {
     /* Codes_SRS_IOTHUBCLIENT_LL_07_002: [ if handle or queue_handle are NULL then IoTHubClient_LL_ReportedStateComplete shall do nothing. ] */
+#if SAFETY_NET
     if (handle == NULL)
     {
         /*"shall return"*/
         LogError("Invalid argument handle=%p", handle);
     }
     else
+#endif
     {
         IOTHUB_CLIENT_LL_HANDLE_DATA* handleData = (IOTHUB_CLIENT_LL_HANDLE_DATA*)handle;
 
@@ -1116,12 +1136,14 @@ IOTHUBMESSAGE_DISPOSITION_RESULT IoTHubClient_LL_MessageCallback(IOTHUB_CLIENT_L
 {
     int result;
     /*Codes_SRS_IOTHUBCLIENT_LL_02_029: [If parameter handle is NULL then IoTHubClient_LL_MessageCallback shall return IOTHUBMESSAGE_ABANDONED.] */
+#if SAFETY_NET
     if (handle == NULL)
     {
         LogError("invalid argument");
         result = IOTHUBMESSAGE_ABANDONED;
     }
     else
+#endif
     {
         IOTHUB_CLIENT_LL_HANDLE_DATA* handleData = (IOTHUB_CLIENT_LL_HANDLE_DATA*)handle;
 
@@ -1147,12 +1169,14 @@ IOTHUBMESSAGE_DISPOSITION_RESULT IoTHubClient_LL_MessageCallback(IOTHUB_CLIENT_L
 void IotHubClient_LL_ConnectionStatusCallBack(IOTHUB_CLIENT_LL_HANDLE handle, IOTHUB_CLIENT_CONNECTION_STATUS status, IOTHUB_CLIENT_CONNECTION_STATUS_REASON reason)
 {
     /*Codes_SRS_IOTHUBCLIENT_LL_25_113: [If parameter connectionStatus is NULL or parameter handle is NULL then IotHubClient_LL_ConnectionStatusCallBack shall return.]*/
+#if SAFETY_NET
     if (handle == NULL)
     {
         /*"shall return"*/
         LogError("invalid arg");
     }
     else
+#endif
     {
         IOTHUB_CLIENT_LL_HANDLE_DATA* handleData = (IOTHUB_CLIENT_LL_HANDLE_DATA*)handle;
 
@@ -1169,12 +1193,14 @@ IOTHUB_CLIENT_RESULT IoTHubClient_LL_SetConnectionStatusCallback(IOTHUB_CLIENT_L
 {
     IOTHUB_CLIENT_RESULT result;
     /*Codes_SRS_IOTHUBCLIENT_LL_25_111: [IoTHubClient_LL_SetConnectionStatusCallback shall return IOTHUB_CLIENT_INVALID_ARG if called with NULL parameter iotHubClientHandle**]** */
+#if SAFETY_NET
     if (iotHubClientHandle == NULL)
     {
         result = IOTHUB_CLIENT_INVALID_ARG;
         LOG_ERROR_RESULT;
     }
     else
+#endif
     {
         IOTHUB_CLIENT_LL_HANDLE_DATA* handleData = (IOTHUB_CLIENT_LL_HANDLE_DATA*)iotHubClientHandle;
         /*Codes_SRS_IOTHUBCLIENT_LL_25_112: [IoTHubClient_LL_SetConnectionStatusCallback shall return IOTHUB_CLIENT_OK and save the callback and userContext as a member of the handle.] */
@@ -1192,12 +1218,14 @@ IOTHUB_CLIENT_RESULT IoTHubClient_LL_SetRetryPolicy(IOTHUB_CLIENT_LL_HANDLE iotH
     IOTHUB_CLIENT_LL_HANDLE_DATA* handleData = (IOTHUB_CLIENT_LL_HANDLE_DATA*)iotHubClientHandle;
 
     /* Codes_SRS_IOTHUBCLIENT_LL_25_116: [**IoTHubClient_LL_SetRetryPolicy shall return IOTHUB_CLIENT_INVALID_ARG if called with NULL iotHubClientHandle]*/
+#if SAFETY_NET
     if (handleData == NULL)
     {
         result = IOTHUB_CLIENT_INVALID_ARG;
         LOG_ERROR_RESULT;
     }
     else
+#endif
     {
         if (handleData->transportHandle == NULL)
         {
@@ -1230,12 +1258,14 @@ IOTHUB_CLIENT_RESULT IoTHubClient_LL_GetRetryPolicy(IOTHUB_CLIENT_LL_HANDLE iotH
     IOTHUB_CLIENT_LL_HANDLE_DATA* handleData = (IOTHUB_CLIENT_LL_HANDLE_DATA*)iotHubClientHandle;
 
     /* Codes_SRS_IOTHUBCLIENT_LL_09_001: [IoTHubClient_LL_GetLastMessageReceiveTime shall return IOTHUB_CLIENT_INVALID_ARG if any of the arguments is NULL] */
+#if SAFETY_NET
     if (handleData == NULL || retryPolicy == NULL || retryTimeoutLimitInSeconds == NULL)
     {
         result = IOTHUB_CLIENT_INVALID_ARG;
         LOG_ERROR_RESULT;
     }
     else
+#endif
     {
         *retryPolicy = handleData->retryPolicy;
         *retryTimeoutLimitInSeconds = handleData->retryTimeoutLimitInSeconds;
@@ -1251,12 +1281,14 @@ IOTHUB_CLIENT_RESULT IoTHubClient_LL_GetLastMessageReceiveTime(IOTHUB_CLIENT_LL_
     IOTHUB_CLIENT_LL_HANDLE_DATA* handleData = (IOTHUB_CLIENT_LL_HANDLE_DATA*)iotHubClientHandle;
 
     /* Codes_SRS_IOTHUBCLIENT_LL_09_001: [IoTHubClient_LL_GetLastMessageReceiveTime shall return IOTHUB_CLIENT_INVALID_ARG if any of the arguments is NULL] */
+#if SAFETY_NET
     if (handleData == NULL || lastMessageReceiveTime == NULL)
     {
         result = IOTHUB_CLIENT_INVALID_ARG;
         LOG_ERROR_RESULT;
     }
     else
+#endif
     {
         /* Codes_SRS_IOTHUBCLIENT_LL_09_002: [IoTHubClient_LL_GetLastMessageReceiveTime shall return IOTHUB_CLIENT_INDEFINITE_TIME - and not set 'lastMessageReceiveTime' - if it is unable to provide the time for the last commands] */
         if (handleData->lastMessageReceiveTime == INDEFINITE_TIME)
@@ -1283,6 +1315,7 @@ IOTHUB_CLIENT_RESULT IoTHubClient_LL_SetOption(IOTHUB_CLIENT_LL_HANDLE iotHubCli
     /*Codes_SRS_IOTHUBCLIENT_LL_02_034: [If iotHubClientHandle is NULL then IoTHubClient_LL_SetOption shall return IOTHUB_CLIENT_INVALID_ARG.]*/
     /*Codes_SRS_IOTHUBCLIENT_LL_02_035: [If optionName is NULL then IoTHubClient_LL_SetOption shall return IOTHUB_CLIENT_INVALID_ARG.] */
     /*Codes_SRS_IOTHUBCLIENT_LL_02_036: [If value is NULL then IoTHubClient_LL_SetOption shall return IOTHUB_CLIENT_INVALID_ARG.] */
+#if SAFETY_NET
     if (
         (iotHubClientHandle == NULL) ||
         (optionName == NULL) ||
@@ -1293,6 +1326,7 @@ IOTHUB_CLIENT_RESULT IoTHubClient_LL_SetOption(IOTHUB_CLIENT_LL_HANDLE iotHubCli
         LogError("invalid argument (NULL)");
     }
     else
+#endif
     {
         IOTHUB_CLIENT_LL_HANDLE_DATA* handleData = (IOTHUB_CLIENT_LL_HANDLE_DATA*)iotHubClientHandle;
 
@@ -1346,12 +1380,14 @@ IOTHUB_CLIENT_RESULT IoTHubClient_LL_SetDeviceTwinCallback(IOTHUB_CLIENT_LL_HAND
 {
     IOTHUB_CLIENT_RESULT result;
     /* Codes_SRS_IOTHUBCLIENT_LL_10_001: [ IoTHubClient_LL_SetDeviceTwinCallback shall fail and return IOTHUB_CLIENT_INVALID_ARG if parameter iotHubClientHandle is NULL.] */
+#if SAFETY_NET
     if (iotHubClientHandle == NULL)
     {
         result = IOTHUB_CLIENT_INVALID_ARG;
         LogError("Invalid argument specified iothubClientHandle=%p", iotHubClientHandle);
     }
     else
+#endif
     {
         IOTHUB_CLIENT_LL_HANDLE_DATA* handleData = (IOTHUB_CLIENT_LL_HANDLE_DATA*)iotHubClientHandle;
         if (deviceTwinCallback == NULL)
@@ -1387,12 +1423,14 @@ IOTHUB_CLIENT_RESULT IoTHubClient_LL_SendReportedState(IOTHUB_CLIENT_LL_HANDLE i
     /* Codes_SRS_IOTHUBCLIENT_LL_10_012: [ IoTHubClient_LL_SendReportedState shall fail and return IOTHUB_CLIENT_INVALID_ARG if parameter iotHubClientHandle is NULL. ] */
     /* Codes_SRS_IOTHUBCLIENT_LL_10_013: [ IoTHubClient_LL_SendReportedState shall fail and return IOTHUB_CLIENT_INVALID_ARG if parameter reportedState is NULL] */
     /* Codes_SRS_IOTHUBCLIENT_LL_07_005: [ IoTHubClient_LL_SendReportedState shall fail and return IOTHUB_CLIENT_INVALID_ARG if parameter size is equal to 0. ] */
+#if SAFETY_NET
     if (iotHubClientHandle == NULL || (reportedState == NULL || size == 0) )
     {
         result = IOTHUB_CLIENT_INVALID_ARG;
         LogError("Invalid argument specified iothubClientHandle=%p, reportedState=%p, size=%zu", iotHubClientHandle, reportedState, size);
     }
     else
+#endif
     {
         IOTHUB_CLIENT_LL_HANDLE_DATA* handleData = (IOTHUB_CLIENT_LL_HANDLE_DATA*)iotHubClientHandle;
         /* Codes_SRS_IOTHUBCLIENT_LL_10_014: [IoTHubClient_LL_SendReportedState shall construct and queue the reported a Device_Twin structure for transmition by the underlying transport.] */
@@ -1429,12 +1467,14 @@ IOTHUB_CLIENT_RESULT IoTHubClient_LL_SetDeviceMethodCallback(IOTHUB_CLIENT_LL_HA
     IOTHUB_CLIENT_RESULT result;
 
     /*Codes_SRS_IOTHUBCLIENT_LL_12_017: [ IoTHubClient_LL_SetDeviceMethodCallback shall fail and return IOTHUB_CLIENT_INVALID_ARG if parameter iotHubClientHandle is NULL. ] */
+#if SAFETY_NET
     if (iotHubClientHandle == NULL)
     {
         result = IOTHUB_CLIENT_INVALID_ARG;
         LOG_ERROR_RESULT;
     }
     else
+#endif
     {
         IOTHUB_CLIENT_LL_HANDLE_DATA* handleData = (IOTHUB_CLIENT_LL_HANDLE_DATA*)iotHubClientHandle;
         if (deviceMethodCallback == NULL)
@@ -1471,12 +1511,14 @@ IOTHUB_CLIENT_RESULT IoTHubClient_LL_SetDeviceMethodCallback_Ex(IOTHUB_CLIENT_LL
 {
     IOTHUB_CLIENT_RESULT result;
     /* Codes_SRS_IOTHUBCLIENT_LL_07_021: [ If handle is NULL then IoTHubClient_LL_SetDeviceMethodCallback_Ex shall return IOTHUB_CLIENT_INVALID_ARG.] */
+#if SAFETY_NET
     if (iotHubClientHandle == NULL)
     {
         result = IOTHUB_CLIENT_INVALID_ARG;
         LOG_ERROR_RESULT;
     }
     else
+#endif
     {
         IOTHUB_CLIENT_LL_HANDLE_DATA* handleData = (IOTHUB_CLIENT_LL_HANDLE_DATA*)iotHubClientHandle;
         if (inboundDeviceMethodCallback == NULL)
@@ -1511,12 +1553,14 @@ IOTHUB_CLIENT_RESULT IoTHubClient_LL_DeviceMethodResponse(IOTHUB_CLIENT_LL_HANDL
 {
     IOTHUB_CLIENT_RESULT result;
     /* Codes_SRS_IOTHUBCLIENT_LL_07_026: [ If handle or methodId is NULL then IoTHubClient_LL_DeviceMethodResponse shall return IOTHUB_CLIENT_INVALID_ARG.] */
+#if SAFETY_NET
     if (iotHubClientHandle == NULL || methodId == NULL)
     {
         result = IOTHUB_CLIENT_INVALID_ARG;
         LOG_ERROR_RESULT;
     }
     else
+#endif
     {
         IOTHUB_CLIENT_LL_HANDLE_DATA* handleData = (IOTHUB_CLIENT_LL_HANDLE_DATA*)iotHubClientHandle;
         /* Codes_SRS_IOTHUBCLIENT_LL_07_027: [ IoTHubClient_LL_DeviceMethodResponse shall call the IoTHubTransport_DeviceMethod_Response transport function.] */
