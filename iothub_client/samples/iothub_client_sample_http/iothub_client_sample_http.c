@@ -27,7 +27,9 @@ and removing calls to _DoWork will yield the same results. */
 /*String containing Hostname, Device Id & Device Key in the format:                         */
 /*  "HostName=<host_name>;DeviceId=<device_id>;SharedAccessKey=<device_key>"                */
 /*  "HostName=<host_name>;DeviceId=<device_id>;SharedAccessSignature=<device_sas_token>"    */
-static const char* connectionString = "HostName=bertk-dt-hub.azure-devices.net;DeviceId=test;SharedAccessKey=oZmAKxCHGKUHUK/AA5jqSEm1vpGz4Cvw3u+wKXM2kd4=";
+static const char* connectionString =
+        "HostName=bertk-dt-hub.azure-devices.net;DeviceId=test;SharedAccessSignature=SharedAccessSignature sr=bertk-dt-hub.azure-devices.net%2Fdevices%2Ftest&sig=jblEReZDvSvXzX3X5cmupELSaRepHIDUUuRmXzB9KwA%3D&se=1489100012";
+
 
 
 static int callbackCounter;
@@ -102,7 +104,7 @@ static void SendConfirmationCallback(IOTHUB_CLIENT_CONFIRMATION_RESULT result, v
 {
     EVENT_INSTANCE* eventInstance = (EVENT_INSTANCE*)userContextCallback;
     
-    verbose_printf("Confirmation[%d] received for message tracking id = %zu with result = %s\r\n", callbackCounter, eventInstance->messageTrackingId, ENUM_TO_STRING(IOTHUB_CLIENT_CONFIRMATION_RESULT, result));
+    printf("C[%d] id = %d r = %d\r\n", callbackCounter, eventInstance->messageTrackingId, result);
     
     /* Some device specific action code goes here... */
     callbackCounter++;
@@ -143,10 +145,12 @@ void iothub_client_sample_http_run(void)
             // is 25 minutes. For more information, see:
             // https://azure.microsoft.com/documentation/articles/iot-hub-devguide/#messaging
             unsigned int minimumPollingTime = 9;
+            /*
             if (IoTHubClient_LL_SetOption(iotHubClientHandle, "timeout", &timeout) != IOTHUB_CLIENT_OK)
             {
                 LogError("failure to set option \"timeout\"");
             }
+            */
 
             if (IoTHubClient_LL_SetOption(iotHubClientHandle, "MinimumPollingTime", &minimumPollingTime) != IOTHUB_CLIENT_OK)
             {
@@ -168,7 +172,7 @@ void iothub_client_sample_http_run(void)
             }
             else
             {
-                LogError("IoTHubClient_LL_SetMessageCallback...successful.");
+                verbose_printf("IoTHubClient_LL_SetMessageCallback...successful.");
 
                 /* Now that we are ready to receive commands, let's send some messages */
                 size_t iterator = 0;
