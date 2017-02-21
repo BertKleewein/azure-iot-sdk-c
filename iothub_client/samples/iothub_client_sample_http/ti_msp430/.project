@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>iothub_client_sample_http</name>
+	<name>iothub_client_sample_http_msp430</name>
 	<comment></comment>
 	<projects>
 		<project>iothub_client</project>
@@ -29,7 +29,13 @@
 		<link>
 			<name>iothub_client_sample_http.c</name>
 			<type>1</type>
-			<locationURI>PARENT-1-PROJECT_LOC/iothub_client_sample_http.c</locationURI>
+			<locationURI>copy_PARENT/iothub_client_sample_http.c</locationURI>
 		</link>
 	</linkedResources>
+	<variableList>
+		<variable>
+			<name>copy_PARENT</name>
+			<value>$%7BPARENT-2-PROJECT_LOC%7D/i/iothub_client/samples/iothub_client_sample_http</value>
+		</variable>
+	</variableList>
 </projectDescription>
