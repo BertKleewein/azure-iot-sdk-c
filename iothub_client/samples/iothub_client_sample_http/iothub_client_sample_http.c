@@ -28,7 +28,7 @@ and removing calls to _DoWork will yield the same results. */
 /*  "HostName=<host_name>;DeviceId=<device_id>;SharedAccessKey=<device_key>"                */
 /*  "HostName=<host_name>;DeviceId=<device_id>;SharedAccessSignature=<device_sas_token>"    */
 static const char* connectionString =
-        "HostName=bertk-dt-hub.azure-devices.net;DeviceId=test;SharedAccessSignature=SharedAccessSignature sr=bertk-dt-hub.azure-devices.net%2Fdevices%2Ftest&sig=jblEReZDvSvXzX3X5cmupELSaRepHIDUUuRmXzB9KwA%3D&se=1489100012";
+        "HostName=bertk-dt-hub.azure-devices.net;DeviceId=test;SharedAccessSignature=SharedAccessSignature sr=bertk-dt-hub.azure-devices.net%2Fdevices%2Ftest&sig=aJ9nobs%2FxO%2FA%2B%2ByG8fbeTmLUrjacZLhIboCtud0Rutc%3D&se=1496181936";
 
 
 
