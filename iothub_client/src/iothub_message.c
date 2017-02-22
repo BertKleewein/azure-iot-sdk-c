@@ -9,6 +9,11 @@
 
 #include "iothub_message.h"
 
+#ifdef MSP430_SELECTIVE_NO_LOGGING
+#undef LogError
+#define LogError(...)
+#endif
+
 #if !defined(MINIMAL_LOGERROR) && !defined(NO_LOGGING)
 DEFINE_ENUM_STRINGS(IOTHUB_MESSAGE_RESULT, IOTHUB_MESSAGE_RESULT_VALUES);
 DEFINE_ENUM_STRINGS(IOTHUBMESSAGE_CONTENT_TYPE, IOTHUBMESSAGE_CONTENT_TYPE_VALUES);
@@ -424,6 +429,8 @@ const char* IoTHubMessage_GetCorrelationId(IOTHUB_MESSAGE_HANDLE iotHubMessageHa
 IOTHUB_MESSAGE_RESULT IoTHubMessage_SetCorrelationId(IOTHUB_MESSAGE_HANDLE iotHubMessageHandle, const char* correlationId)
 {
     IOTHUB_MESSAGE_RESULT result;
+
+#if SAFETY_NET
     /* Codes_SRS_IOTHUBMESSAGE_07_018: [if any of the parameters are NULL then IoTHubMessage_SetCorrelationId shall return a IOTHUB_MESSAGE_INVALID_ARG value.]*/
     if (iotHubMessageHandle == NULL || correlationId == NULL)
     {
@@ -431,6 +438,7 @@ IOTHUB_MESSAGE_RESULT IoTHubMessage_SetCorrelationId(IOTHUB_MESSAGE_HANDLE iotHu
         result = IOTHUB_MESSAGE_INVALID_ARG;
     }
     else
+#endif
     {
         IOTHUB_MESSAGE_HANDLE_DATA* handleData = iotHubMessageHandle;
         /* Codes_SRS_IOTHUBMESSAGE_07_019: [If the IOTHUB_MESSAGE_HANDLE correlationId is not NULL, then the IOTHUB_MESSAGE_HANDLE correlationId will be deallocated.] */
@@ -457,12 +465,14 @@ IOTHUB_MESSAGE_RESULT IoTHubMessage_SetMessageId(IOTHUB_MESSAGE_HANDLE iotHubMes
 {
     IOTHUB_MESSAGE_RESULT result;
     /* Codes_SRS_IOTHUBMESSAGE_07_012: [if any of the parameters are NULL then IoTHubMessage_SetMessageId shall return a IOTHUB_MESSAGE_INVALID_ARG value.] */
+#if SAFETY_NET
     if (iotHubMessageHandle == NULL || messageId == NULL)
     {
         LogError("invalid arg (NULL) passed to IoTHubMessage_SetMessageId");
         result = IOTHUB_MESSAGE_INVALID_ARG;
     }
     else
+#endif
     {
         IOTHUB_MESSAGE_HANDLE_DATA* handleData = iotHubMessageHandle;
         /* Codes_SRS_IOTHUBMESSAGE_07_013: [If the IOTHUB_MESSAGE_HANDLE messageId is not NULL, then the IOTHUB_MESSAGE_HANDLE messageId will be freed] */
@@ -488,12 +498,14 @@ const char* IoTHubMessage_GetMessageId(IOTHUB_MESSAGE_HANDLE iotHubMessageHandle
 {
     const char* result;
     /* Codes_SRS_IOTHUBMESSAGE_07_010: [if the iotHubMessageHandle parameter is NULL then IoTHubMessage_MessageId shall return a NULL value.] */
+#if SAFETY_NET
     if (iotHubMessageHandle == NULL)
     {
         LogError("invalid arg (NULL) passed to IoTHubMessage_GetMessageId");
         result = NULL;
     }
     else
+#endif
     {
         /* Codes_SRS_IOTHUBMESSAGE_07_011: [IoTHubMessage_MessageId shall return the messageId as a const char*.] */
         IOTHUB_MESSAGE_HANDLE_DATA* handleData = iotHubMessageHandle;
