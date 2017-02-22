@@ -3,7 +3,6 @@
 	<name>iothub_client_sample_http_msp430</name>
 	<comment></comment>
 	<projects>
-		<project>iothub_client</project>
 		<project>iothub_client_msp430</project>
 	</projects>
 	<buildSpec>
