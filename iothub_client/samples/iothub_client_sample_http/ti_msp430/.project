@@ -4,6 +4,7 @@
 	<comment></comment>
 	<projects>
 		<project>iothub_client</project>
+		<project>iothub_client_msp430</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
@@ -29,7 +30,7 @@
 		<link>
 			<name>iothub_client_sample_http.c</name>
 			<type>1</type>
-			<locationURI>copy_PARENT/iothub_client_sample_http.c</locationURI>
+			<locationURI>PARENT-1-PROJECT_LOC/iothub_client_sample_http.c</locationURI>
 		</link>
 	</linkedResources>
 	<variableList>
