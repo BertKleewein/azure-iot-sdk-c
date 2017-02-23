@@ -61,11 +61,6 @@
 			<locationURI>PARENT-4-PROJECT_LOC/c-utility/src/crt_abstractions.c</locationURI>
 		</link>
 		<link>
-			<name>dmapingpong_msp430.c</name>
-			<type>1</type>
-			<locationURI>PARENT-4-PROJECT_LOC/c-utility/adapters/dmapingpong_msp430.c</locationURI>
-		</link>
-		<link>
 			<name>doublylinkedlist.c</name>
 			<type>1</type>
 			<locationURI>PARENT-4-PROJECT_LOC/c-utility/src/doublylinkedlist.c</locationURI>
