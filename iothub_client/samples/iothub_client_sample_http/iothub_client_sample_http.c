@@ -42,7 +42,7 @@ static char propText[512];
 #ifdef NO_VERBOSE_OUTPUT
 #define verbose_printf(...) 
 #else
-#define verbose_printf printf(__VA_ARGS__)
+#define verbose_printf(...) printf(__VA_ARGS__)
 #endif
 
 
@@ -139,13 +139,14 @@ void iothub_client_sample_http_run(void)
         }
         else
         {
-            uint32_t timeout = 241000;
+            
             // Because it can poll "after 9 seconds" polls will happen effectively // at ~10 seconds.
             // Note that for scalabilty, the default value of minimumPollingTime
             // is 25 minutes. For more information, see:
             // https://azure.microsoft.com/documentation/articles/iot-hub-devguide/#messaging
             unsigned int minimumPollingTime = 9;
             /*
+            uint32_t timeout = 241000;
             if (IoTHubClient_LL_SetOption(iotHubClientHandle, "timeout", &timeout) != IOTHUB_CLIENT_OK)
             {
                 LogError("failure to set option \"timeout\"");
