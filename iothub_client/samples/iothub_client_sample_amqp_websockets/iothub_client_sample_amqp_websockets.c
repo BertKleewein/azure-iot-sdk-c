@@ -12,7 +12,7 @@
 #include "iothubtransportamqp_websockets.h"
 #include "../../../certs/certs.h"
 
-static const char* connectionString = "[device connection string]";
+static const char* connectionString = ""
 static int callbackCounter;
 
 
@@ -111,7 +111,7 @@ static void SendConfirmationCallback(IOTHUB_CLIENT_CONFIRMATION_RESULT result, v
 
 static char msgText[1024];
 static char propText[1024];
-#define MESSAGE_COUNT 5
+#define MESSAGE_COUNT 300
 
 void iothub_client_sample_amqp_websockets_run(void)
 {
@@ -181,6 +181,8 @@ void iothub_client_sample_amqp_websockets_run(void)
                         (void)printf("IoTHubClient_SendEventAsync accepted data for transmission to IoT Hub.\r\n");
                     }
                 }
+
+		ThreadAPI_Sleep(1000);
             }
 
             /* Wait for Commands. */
