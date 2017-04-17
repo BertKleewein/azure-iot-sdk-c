@@ -1,6 +1,6 @@
 [submodule "azure-c-shared-utility"]
 	path = c-utility
-	url = file://h:/repos/ibot-c-utility
+	url = https://github.com/BertKleewein/azure-c-shared-utility
 [submodule "azure-umqtt-c"]
 	path = umqtt
 	url = https://github.com/Azure/azure-umqtt-c.git
